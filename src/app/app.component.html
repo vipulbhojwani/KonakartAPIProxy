@@ -1,0 +1,132 @@
+<div class="container">
+  <div id="stepper1" class="bs-stepper">
+    <div class="bs-stepper-header">
+      <div class="step" data-target="#test-l-1">
+        <button class="step-trigger">
+          <span class="bs-stepper-circle">1</span>
+          <span class="bs-stepper-label">Login</span>
+        </button>
+      </div>
+      <div class="line"></div>
+      <div class="step" data-target="#test-l-2">
+        <button class="step-trigger">
+          <span class="bs-stepper-circle">2</span>
+          <span class="bs-stepper-label">Create & Save Order</span>
+        </button>
+      </div>
+      <div class="line"></div>
+      <div class="step" data-target="#test-l-3">
+        <button class="step-trigger">
+          <span class="bs-stepper-circle">3</span>
+          <span class="bs-stepper-label">Get Payment Details</span>
+        </button>
+      </div>
+      <div class="line"></div>
+      <div class="step" data-target="#test-l-4">
+        <button class="step-trigger">
+          <span class="bs-stepper-circle">4</span>
+          <span class="bs-stepper-label">Launch Payment Gateway</span>
+        </button>
+      </div>
+    </div>
+    <div class="bs-stepper-content">
+      <div id="test-l-1" class="content">
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" [(ngModel)]="loginForm.emailAddr" class="form-control" name="exampleInputEmail1"
+              id="exampleInputEmail1" placeholder="Enter email" />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Password</label>
+            <input type="password" [(ngModel)]="loginForm.password" class="form-control" name="examplePassword"
+              id="examplePassword" placeholder="Enter password" />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Generated Session Id</label>
+            <input type="session" [(ngModel)]="loginForm.sessionId" class="form-control" name="exampleSession"
+              id="exampleSession" placeholder="Generated Session Id" disabled />
+          </div>
+          <button (click)="login()" class="btn btn-primary mr-3">Login</button>
+          <button (click)="next()" class="btn btn-primary">Next</button>
+        </form>
+      </div>
+      <div id="test-l-2" class="content">
+        <form>
+          <div class="form-group">
+            <label for="exampleInputPassword1">SessionId</label>
+            <input type="text" class="form-control" [(ngModel)]="loginForm.sessionId" id="orderSessionId"
+              name="orderSessionId" placeholder="Generated SessionId Goes here" disabled />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Order Product</label>
+            <input type="text" class="form-control" id="orderProduct" name="orderProduct" placeholder="Password"
+              value="IELTS Exam" disabled />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Order Quantity</label>
+            <input type="text" class="form-control" id="orderQuantity" name="orderQuantity" placeholder="Password"
+              value="1" disabled />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Generated Order Id</label>
+            <input type="text" class="form-control" [(ngModel)]="createAndSaveForm.orderId" id="orderId" name="orderId"
+              placeholder="Generated Order Id" disabled />
+          </div>
+          <button (click)="createAndSaveOrder()" class="btn btn-primary mr-3">Create & Save Order</button>
+
+          <button (click)="next()" class="btn btn-primary">Next</button>
+        </form>
+      </div>
+      <div id="test-l-3" class="content">
+        <form>
+          <div class="form-group">
+            <label for="exampleInputPassword1">SessionId</label>
+            <input type="text" class="form-control" [(ngModel)]="loginForm.sessionId" id="orderSessionId"
+              name="orderSessionId" placeholder="Generated SessionId Goes here" disabled />
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputPassword1">Generated Order Id</label>
+            <input type="text" class="form-control" [(ngModel)]="createAndSaveForm.orderId" id="orderId" name="orderId"
+              placeholder="Generated Order Id Goes here" disabled />
+          </div>
+
+          <div class="form-group">
+
+            <button (click)="getPaymentDetails()" class="btn btn-primary mr-3">Get Payment Details</button>
+
+            <button (click)="next()" class="btn btn-primary ">Next</button>
+
+          </div>
+
+          <div class="form-group">
+
+            <label for="exampleInputPassword1">Payments Data</label>
+
+            <div class="jumbotron my-5">
+
+              <ngx-json-viewer [json]="paymentForm"></ngx-json-viewer>
+            </div>
+          </div>
+         </form>
+      </div>
+
+      <div id="test-l-4" class="content">
+        <div *ngIf="paymentForm.data.fields.length > 0">
+        <form ngNoForm action={{paymentForm.data.requestUrl}} target="_blank" method="POST">
+
+          <div class="form-group" *ngFor="let parameter of paymentForm.data['fields']; index as i">
+            <label for="name">{{parameter.name}}</label>
+            <input type="text" class="form-control" id={{parameter.name}} name={{parameter.name}} value={{parameter.value}}>
+          </div>
+
+          <button type="submit" class="btn btn-success" value="Submit" >Submit</button>
+
+          
+        </form>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
